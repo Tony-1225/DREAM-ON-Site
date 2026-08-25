@@ -123,16 +123,17 @@
   document.getElementById('hero-vol-badge').textContent =
     `Vol.${event.vol} — ${event.anniversary}`;
 
-  document.getElementById('hero-info').innerHTML = `
-    <div class="event-date">${event.date}</div>
-    <div class="event-venue">@ ${event.venue} / ${event.open} / ${event.start}</div>
-  `;
-
   /* ============================================================
      PHASE（エントリー状態の切り替え）
   ============================================================ */
   const phase = data.phase || '2';
   const pt = (data.phase_text && data.phase_text[phase]) || { headline: '', note: '' };
+
+  // フェーズ0（公開前・次回未定）では開催日・会場は非表示
+  document.getElementById('hero-info').innerHTML = (phase === '0') ? '' : `
+    <div class="event-date">${event.date}</div>
+    <div class="event-venue">@ ${event.venue} / ${event.open} / ${event.start}</div>
+  `;
   const phaseEl = document.getElementById('hero-phase');
   const ctaEl = document.getElementById('hero-cta');
   const entryFormUrl = data.entry_form_url || 'mailto:k-dancefes@shibuya-o.com';
@@ -140,14 +141,20 @@
   // フェーズ表示（見出し＋補足＋必要ならカウントダウン）
   let phaseHTML = '';
 
+  if (phase === '0') {
+    // フェーズ0：開催日・会場・エントリー日・カウントダウンは全て非表示、COMING SOONのみ
+    phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
+  }
   if (phase === '1') {
     // 開催日テキスト表示
     if (event.date) {
       phaseHTML += `<p class="phase-event-date">開催日：${event.date}</p>`;
     }
+    // 見出し（カウントダウンの上に配置）
+    phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
     // エントリーまでDaysカウントダウン
     if (data.entry_open_date) {
-      phaseHTML += `<p class="phase-cd-label">エントリー開始まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
+      phaseHTML += `<div class="phase-countdown" id="phase-countdown"></div>`;
     }
   }
   if (phase === '2' && data.entry_close_date) {
@@ -159,8 +166,10 @@
     phaseHTML += `<p class="phase-cd-label">本番まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
   }
 
-  // 見出し（カウントダウンの後に統一）
-  phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
+  // 見出し（カウントダウンの後に統一。フェーズ0/1はカウントダウンの上に配置済み）
+  if (phase !== '1' && phase !== '0') {
+    phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
+  }
 
   phaseHTML += `<div class="phase-note">${pt.note}</div>`;
   phaseEl.innerHTML = phaseHTML;
@@ -192,7 +201,6 @@
   if (cdTarget) {
     const target = new Date(cdTarget).getTime();
     const cdEl = document.getElementById('phase-countdown');
-    const daysOnly = (phase === '1'); // フェーズ1はDaysのみ
     const updateCountdown = () => {
       const diff = target - Date.now();
       if (diff <= 0) {
@@ -204,20 +212,15 @@
       const h = Math.floor((diff % 86400000) / 3600000);
       const m = Math.floor((diff % 3600000) / 60000);
       const s = Math.floor((diff % 60000) / 1000);
-      if (daysOnly) {
-        cdEl.innerHTML = `<div class="cd-box cd-box-large"><span class="cd-num">${d}</span><span class="cd-unit">DAYS</span></div>`;
-      } else {
-        cdEl.innerHTML = `
-          <div class="cd-box"><span class="cd-num">${d}</span><span class="cd-unit">DAYS</span></div>
-          <div class="cd-box"><span class="cd-num">${String(h).padStart(2,'0')}</span><span class="cd-unit">HOUR</span></div>
-          <div class="cd-box"><span class="cd-num">${String(m).padStart(2,'0')}</span><span class="cd-unit">MIN</span></div>
-          <div class="cd-box"><span class="cd-num">${String(s).padStart(2,'0')}</span><span class="cd-unit">SEC</span></div>
-        `;
-      }
+      cdEl.innerHTML = `
+        <div class="cd-box"><span class="cd-num">${d}</span><span class="cd-unit">DAYS</span></div>
+        <div class="cd-box"><span class="cd-num">${String(h).padStart(2,'0')}</span><span class="cd-unit">HOUR</span></div>
+        <div class="cd-box"><span class="cd-num">${String(m).padStart(2,'0')}</span><span class="cd-unit">MIN</span></div>
+        <div class="cd-box"><span class="cd-num">${String(s).padStart(2,'0')}</span><span class="cd-unit">SEC</span></div>
+      `;
     };
     updateCountdown();
-    if (!daysOnly) setInterval(updateCountdown, 1000);
-    else setInterval(updateCountdown, 60000); // Daysのみは1分ごとに更新
+    setInterval(updateCountdown, 1000);
   }
 
   document.getElementById('about-lead').innerHTML = about.lead.replace(/\n/g, '<br>');
@@ -390,6 +393,18 @@
         a.parentElement.style.display = 'none';
       }
     });
+  } else if (phase === '0') {
+    // フェーズ0：公開前・次回未定のためENTRY・出演者チーム・タイムテーブルを全て非表示
+    ['entry', 'teams', 'timetable'].forEach(id => {
+      const section = document.getElementById(id);
+      if (section) section.style.display = 'none';
+    });
+    document.querySelectorAll('#nav-list a').forEach(a => {
+      const href = a.getAttribute('href');
+      if (href === '#entry' || href === '#teams' || href === '#timetable') {
+        a.parentElement.style.display = 'none';
+      }
+    });
   }
 
   /* ============================================================
@@ -458,6 +473,12 @@
     a.innerHTML = s.icon;
     footerSocial.appendChild(a);
   });
+
+  const footerBuildEl = document.getElementById('footer-build');
+  if (footerBuildEl) {
+    const buildVersion = (data._meta && data._meta.version) || '?';
+    footerBuildEl.textContent = `v${buildVersion} / phase ${phase}`;
+  }
 
   /* ============================================================
      SCROLL REVEAL (IntersectionObserver)
