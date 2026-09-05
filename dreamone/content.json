@@ -2,7 +2,7 @@
   "_meta": {
     "file_type": "JSON",
     "site": "DREAM ONE! (ドリワン)",
-    "version": "52"
+    "version": "53"
   },
   "site": {
     "title": "DREAM ONE!",
@@ -28,7 +28,7 @@
     "venue_url": "https://www.sunazalea.or.jp/",
     "open": "OPEN COMING SOON",
     "start": "START COMING SOON",
-    "entry_period": "COMING SOON",
+    "entry_period": "9月14日（月）〜10月14日（水）",
     "ticket_general": "3,000円（当日・会場にて）",
     "ticket_relation": "2,500円（出場者からご購入）",
     "stage_width": "14.6m",
@@ -160,8 +160,8 @@
   ],
   "hero_images": [],
   "phase": "1",
-  "entry_open_date": "",
-  "entry_close_date": "",
+  "entry_open_date": "2026-09-14T00:00:00",
+  "entry_close_date": "2026-10-14T23:59:00",
   "event_datetime": "2026-11-23T00:00:00",
   "phase_text": {
     "1": {
