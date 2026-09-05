@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 52
+   VERSION   : 53
 ============================================ */
 (async () => {
   let data;
@@ -484,6 +484,12 @@
     footerSocial.appendChild(a);
   });
 
+  const footerBuildEl = document.getElementById('footer-build');
+  if (footerBuildEl) {
+    const buildVersion = (data._meta && data._meta.version) || '?';
+    footerBuildEl.textContent = `v${buildVersion} / phase ${phase}`;
+  }
+
   // SCROLL REVEAL
   const observer = new IntersectionObserver(
     entries => entries.forEach(entry => {
@@ -509,5 +515,5 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 52
+   VERSION   : 53
 ============================================ */
