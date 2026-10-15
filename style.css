@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ON! (ドリオン)
-   VERSION   : 60
+   VERSION   : 66
 ============================================ */
 /* =============================================
    ============================================= */
@@ -50,7 +50,7 @@ ul { list-style: none; }
 
 /* ロゴ（左端・余白で他を押し出す） */
 .logo { display: flex; align-items: center; flex-shrink: 0; margin-right: auto; }
-.logo-img { height: 34px; width: auto; object-fit: contain; }
+.logo-img { height: 34px; width: auto; object-fit: contain; filter: blur(0.5px); }
 .logo-text { font-family: var(--font-en); font-size: 1.3rem; letter-spacing: 0.05em; background: var(--accent-grd); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
 /* サイト切り替えボタン（常時表示・青系） */
@@ -107,7 +107,7 @@ ul { list-style: none; }
 .hero-overlay { position: absolute; inset: 0; background: var(--hero-overlay); z-index: 1; }
 .hero-content { position: relative; z-index: 2; text-align: center; padding: 0; color: #fff; max-width: 600px; }
 .hero-logo-wrap { margin-bottom: 8px; animation: fadeInUp 0.8s 0.4s both; }
-.hero-logo-img { max-width: min(440px, 85vw); width: 100%; margin: 0 auto; filter: drop-shadow(0 0 1px rgba(255,255,255,0.4)) drop-shadow(0 4px 24px rgba(0,0,0,0.45)); }
+.hero-logo-img { max-width: min(440px, 85vw); width: 100%; margin: 0 auto; filter: blur(1px) drop-shadow(0 0 3px rgba(255,255,255,0.35)) drop-shadow(0 4px 24px rgba(0,0,0,0.45)); }
 .hero-vol-badge { display: inline-block; font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.18em; background: var(--accent-grd); padding: 5px 14px; border-radius: 100px; margin-bottom: 16px; animation: fadeInUp 0.8s 0.2s both; }
 .hero-title { font-family: var(--font-en); font-size: clamp(4rem, 20vw, 8rem); line-height: 1; letter-spacing: 0.04em; color: #fff; text-shadow: 0 2px 40px rgba(0,0,0,0.5); animation: fadeInUp 0.8s 0.4s both; }
 .hero-sub { font-family: var(--font-mono); font-size: clamp(0.65rem, 3vw, 0.85rem); letter-spacing: 0.22em; color: rgba(255,255,255,0.85); margin-top: 8px; animation: fadeInUp 0.8s 0.55s both; }
@@ -251,7 +251,7 @@ ul { list-style: none; }
 .site-footer { background: var(--bg-alt); border-top: 1px solid var(--border); padding: 48px 0 32px; }
 .footer-inner { max-width: 600px; margin: 0 auto; padding: 0 20px; text-align: center; }
 .footer-logo { display: flex; justify-content: center; margin-bottom: 20px; }
-.footer-logo img { height: 40px; width: auto; object-fit: contain; background: white; padding: 4px 8px; border-radius: 8px; }
+.footer-logo img { height: 40px; width: auto; object-fit: contain; background: white; padding: 4px 8px; border-radius: 8px; filter: blur(0.5px); }
 .footer-social { display: flex; justify-content: center; gap: 16px; margin-bottom: 24px; flex-wrap: wrap; }
 .social-link { display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--border); background: var(--bg-card); font-size: 1.1rem; color: var(--text); transition: transform 0.2s, border-color 0.2s, color 0.2s; }
 .social-link:hover { transform: translateY(-3px); border-color: var(--accent); color: var(--accent); }
@@ -301,7 +301,7 @@ ul { list-style: none; }
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ON! (ドリオン)
-   VERSION   : 60
+   VERSION   : 66
 ============================================ */
 
 /* ---------- U-18 アカデミーブロック ---------- */
