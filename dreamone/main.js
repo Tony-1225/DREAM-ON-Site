@@ -336,6 +336,7 @@
 
   // TEAMS
   const teamsGrid = document.getElementById('teams-grid');
+  teamsGrid.classList.toggle('teams-grid--pending', !teams || teams.length === 0);
   if (!teams || teams.length === 0) {
     teamsGrid.innerHTML = `
       <div class="coming-soon-box reveal">
