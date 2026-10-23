@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 53
+   VERSION   : 62
 ============================================ */
 (async () => {
   let data;
@@ -94,6 +94,8 @@
      PHASE（フェーズ切り替え）
   ============================================================ */
   const phase = data.phase || '2';
+  // 発表データを用意しても、フェーズ4になるまでは画面に公開しない。
+  const announcementPublished = phase === '4';
   const pt = (data.phase_text && data.phase_text[phase]) || { headline: '', note: '' };
   const phaseEl = document.getElementById('hero-phase');
   const ctaEl = document.getElementById('hero-cta');
@@ -113,9 +115,12 @@
   if (phase === '2' && data.entry_close_date) {
     phaseHTML += `<p class="phase-cd-label">エントリー締切まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
   }
-  if (phase === '4' && data.event_datetime) {
+  if (phase === '4') {
     phaseHTML += `<a href="#teams" class="btn btn-primary" style="margin:12px auto 4px;display:inline-flex;">出場サークルを見る</a>`;
-    phaseHTML += `<p class="phase-cd-label">本番まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
+    phaseHTML += `<a href="#judges" class="btn btn-outline" style="margin:12px auto 4px;display:inline-flex;">審査員を見る</a>`;
+    if (data.event_datetime) {
+      phaseHTML += `<p class="phase-cd-label">本番まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
+    }
   }
   if (phase !== '1') {
     phaseHTML += `<div class="phase-note">${pt.note}</div>`;
@@ -336,8 +341,23 @@
 
   // TEAMS
   const teamsGrid = document.getElementById('teams-grid');
-  teamsGrid.classList.toggle('teams-grid--pending', !teams || teams.length === 0);
-  if (!teams || teams.length === 0) {
+  const hasTeamsPoster = announcementPublished && !!data.teams_poster;
+  teamsGrid.classList.toggle('teams-grid--pending', hasTeamsPoster || !announcementPublished || !teams || teams.length === 0);
+  if (hasTeamsPoster) {
+    const posterButton = document.createElement('button');
+    posterButton.type = 'button';
+    posterButton.className = 'announcement-poster reveal';
+    posterButton.setAttribute('aria-label', '出場サークルの告知画像を拡大');
+    const poster = document.createElement('img');
+    poster.src = data.teams_poster;
+    poster.alt = `DREAM ONE! Vol.${event.vol} 出場サークル：${(teams || []).join('、')}`;
+    poster.loading = 'lazy';
+    posterButton.appendChild(poster);
+    posterButton.addEventListener('click', () => openJudgePopup({
+      name: '出場サークル', image: data.teams_poster, profile: ''
+    }));
+    teamsGrid.appendChild(posterButton);
+  } else if (!announcementPublished || !teams || teams.length === 0) {
     teamsGrid.innerHTML = `
       <div class="coming-soon-box reveal">
         <div class="coming-soon-text">COMING SOON</div>
@@ -388,7 +408,7 @@
 
   // JUDGES（審査員）
   const judgesGrid = document.getElementById('judges-grid');
-  const judges = data.judges || [];
+  const judges = announcementPublished ? (data.judges || []) : [];
   if (judges.length === 0) {
     judgesGrid.innerHTML = `
       <div class="coming-soon-box reveal">
@@ -399,6 +419,9 @@
     judges.forEach((judge, i) => {
       const card = document.createElement('div');
       card.className = 'judge-card reveal';
+      card.setAttribute('role', 'button');
+      card.setAttribute('tabindex', '0');
+      card.setAttribute('aria-label', `${judge.name}の紹介を見る`);
       // 画像：存在すれば表示、なければイニシャル
       const initial = judge.name.charAt(0);
       card.innerHTML = `
@@ -410,6 +433,12 @@
         <div class="judge-name">${judge.name}</div>
       `;
       card.addEventListener('click', () => openJudgePopup(judge));
+      card.addEventListener('keydown', e => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openJudgePopup(judge);
+        }
+      });
       judgesGrid.appendChild(card);
     });
   }
@@ -419,11 +448,14 @@
   const popupClose = document.getElementById('judge-popup-close');
 
   function openJudgePopup(judge) {
+    document.getElementById('judge-popup-img').style.display = 'block';
     document.getElementById('judge-popup-img').src = judge.image;
     document.getElementById('judge-popup-img').alt = judge.name;
     document.getElementById('judge-popup-img').onerror = function() { this.style.display='none'; };
     document.getElementById('judge-popup-name').textContent = judge.name;
-    document.getElementById('judge-popup-profile').textContent = judge.profile;
+    // 告知画像内の紹介文をそのまま表示。テキストの重複掲載はしない。
+    document.getElementById('judge-popup-profile').textContent = '';
+    document.getElementById('judge-popup-original').href = judge.image;
     overlay.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -435,12 +467,15 @@
 
   popupClose.addEventListener('click', closeJudgePopup);
   overlay.addEventListener('click', e => { if (e.target === overlay) closeJudgePopup(); });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && overlay.classList.contains('open')) closeJudgePopup();
+  });
 
   // フェーズ4：セクション順序並べ替え＋NAVリンク更新
   if (phase === '4') {
     const main = document.getElementById('main-content');
     if (main) {
-      const order = ['teams', 'timetable', 'judges', 'rules', 'about', 'qa'];
+      const order = ['teams', 'judges', 'timetable', 'rules', 'about', 'qa'];
       order.forEach(id => {
         const el = document.getElementById(id);
         if (el) main.appendChild(el);
@@ -451,9 +486,9 @@
     navList.innerHTML = '';
     const phase4Nav = [
       { label: 'TEAMS', href: '#teams' },
-      { label: 'TIMETABLE', href: '#timetable' },
       { label: 'JUDGES', href: '#judges' },
-      { label: 'RULES', href: '#rules' },
+      { label: 'TIMETABLE', href: '#timetable' },
+      { label: 'ENTRY', href: '#rules' },
       { label: 'ABOUT', href: '#about' },
       { label: 'Q&A', href: '#qa' },
     ];
@@ -516,5 +551,5 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 53
+   VERSION   : 62
 ============================================ */

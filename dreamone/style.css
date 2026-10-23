@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 58.1
+   VERSION   : 60
 ============================================ */
 /* =============================================
    DREAM ONE! – Style
@@ -305,31 +305,35 @@ ul { list-style: none; }
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 58.1
+   VERSION   : 60
 ============================================ */
 
 /* ---------- 審査員 ---------- */
 .judges-grid { display: flex; flex-direction: column; gap: 20px; align-items: center; }
-.judge-card { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: transform 0.2s; width: 100%; max-width: 240px; }
+.judge-card { display: flex; flex-direction: column; align-items: center; gap: 10px; cursor: pointer; transition: transform 0.2s; width: 100%; max-width: 400px; min-width: 0; }
+.announcement-poster { display: block; width: 100%; max-width: 600px; padding: 0; border: 0; border-radius: 12px; background: transparent; cursor: zoom-in; }
+.announcement-poster img { display: block; width: 100%; height: auto; border-radius: inherit; }
+.announcement-poster:focus-visible, .judge-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
 .judge-card:hover { transform: translateY(-4px); }
 .judge-card:active { transform: scale(0.97); }
-.judge-img-wrap { position: relative; width: 120px; height: 120px; border-radius: 50%; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,200,255,0.25); }
-.judge-img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.judge-img-wrap { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,200,255,0.25); }
+.judge-img { width: 100%; height: 100%; object-fit: contain; }
 .judge-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--bg-card); font-family: var(--font-en); font-size: 2rem; color: var(--accent); }
 .judge-name { font-size: 0.92rem; font-weight: 700; text-align: center; color: var(--text); }
 
 /* 審査員ポップアップ */
 .judge-popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.75); z-index: 2000; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity 0.25s; }
 .judge-popup-overlay.open { opacity: 1; pointer-events: auto; }
-.judge-popup { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px 24px 28px; max-width: 480px; width: 100%; max-height: 85vh; overflow-y: auto; text-align: center; box-shadow: 0 16px 60px rgba(0,0,0,0.6); }
+.judge-popup { position: relative; background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 40px 16px 24px; max-width: 760px; width: 100%; max-height: 85vh; overflow-y: auto; text-align: center; box-shadow: 0 16px 60px rgba(0,0,0,0.6); }
 .judge-popup-close { position: absolute; top: 12px; right: 16px; background: none; border: none; color: var(--text-sub); font-size: 1.2rem; cursor: pointer; padding: 4px 8px; }
-.judge-popup-img { width: 140px; height: 140px; border-radius: 50%; object-fit: cover; border: 2px solid var(--accent); margin: 0 auto 16px; display: block; }
+.judge-popup-img { width: 100%; height: auto; border-radius: 12px; margin: 0 auto 16px; display: block; }
 .judge-popup-name { font-size: 1.1rem; font-weight: 700; margin-bottom: 14px; color: var(--text); }
 .judge-popup-profile { font-size: 0.84rem; line-height: 1.85; color: var(--text-sub); text-align: left; white-space: pre-line; }
 
 /* PC：横3列 */
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .judges-grid { flex-direction: row; justify-content: center; align-items: flex-start; gap: 32px; }
+  .judge-card { flex: 1; max-width: none; }
 }
 
 /* ---------- Coming Soon ---------- */
@@ -393,5 +397,5 @@ ul { list-style: none; }
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 58.1
+   VERSION   : 60
 ============================================ */
