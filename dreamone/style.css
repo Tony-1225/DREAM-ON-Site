@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 60
+   VERSION   : 63
 ============================================ */
 /* =============================================
    DREAM ONE! – Style
@@ -305,7 +305,7 @@ ul { list-style: none; }
 /* ============================================
    FILE TYPE : CSS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 60
+   VERSION   : 63
 ============================================ */
 
 /* ---------- 審査員 ---------- */
@@ -316,9 +316,9 @@ ul { list-style: none; }
 .announcement-poster:focus-visible, .judge-card:focus-visible { outline: 3px solid var(--accent); outline-offset: 5px; }
 .judge-card:hover { transform: translateY(-4px); }
 .judge-card:active { transform: scale(0.97); }
-.judge-img-wrap { position: relative; width: 100%; aspect-ratio: 4 / 5; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,200,255,0.25); }
-.judge-img { width: 100%; height: 100%; object-fit: contain; }
-.judge-img-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: var(--bg-card); font-family: var(--font-en); font-size: 2rem; color: var(--accent); }
+.judge-img-wrap { position: relative; width: 100%; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 16px rgba(0,200,255,0.25); }
+.judge-img { display: block; width: 100%; height: auto; }
+.judge-img-placeholder { width: 100%; aspect-ratio: 4 / 5; display: flex; align-items: center; justify-content: center; background: var(--bg-card); font-family: var(--font-en); font-size: 2rem; color: var(--accent); }
 .judge-name { font-size: 0.92rem; font-weight: 700; text-align: center; color: var(--text); }
 
 /* 審査員ポップアップ */
