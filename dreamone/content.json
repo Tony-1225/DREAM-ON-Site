@@ -2,7 +2,7 @@
   "_meta": {
     "file_type": "JSON",
     "site": "DREAM ONE! (ドリワン)",
-    "version": "63"
+    "version": "69"
   },
   "site": {
     "title": "DREAM ONE!",
@@ -26,8 +26,8 @@
     "date": "2026.11.23（Mon・祝）",
     "venue": "和光市民文化センター\nサンアゼリア大ホール",
     "venue_url": "https://www.sunazalea.or.jp/",
-    "open": "OPEN COMING SOON",
-    "start": "START COMING SOON",
+    "open": "OPEN 15:00〜",
+    "start": "START 16:00〜",
     "entry_period": "9月14日（月）〜10月14日（水）",
     "ticket_general": "3,000円（当日・会場にて）",
     "ticket_relation": "2,500円（出場者からご購入）",
@@ -119,6 +119,7 @@
   ],
   "teams_poster": "images/teams-vol6-v61.jpg",
   "timetable": [],
+  "performance_order_poster": "images/performance-order-vol6-v64.jpg",
   "qa": [
     {
       "q": "エントリーすれば必ず出演できますか？",
@@ -155,7 +156,7 @@
       "href": "#rules"
     },
     {
-      "label": "TIMETABLE",
+      "label": "出演順",
       "href": "#timetable"
     },
     {
@@ -168,7 +169,7 @@
     }
   ],
   "hero_images": [],
-  "phase": "4",
+  "phase": "5",
   "entry_open_date": "2026-09-14T00:00:00",
   "entry_close_date": "2026-10-14T23:59:00",
   "event_datetime": "2026-11-23T00:00:00",
@@ -190,6 +191,12 @@
       "note": "たくさんのご応募ありがとうございました。\n出場サークルの発表まで今しばらくお待ちください。",
       "entry_headline": "エントリー受付は終了しました。",
       "entry_note": "たくさんのご応募ありがとうございました。\n出場サークルの発表をお楽しみに！"
+    },
+    "5": {
+      "headline": "出演順発表！",
+      "note": "",
+      "entry_headline": "今回のエントリーは締め切りました。",
+      "entry_note": "次回の開催情報はSNSにてお知らせします。\nフォローして最新情報をチェック！"
     },
     "4": {
       "headline": "審査員・出場サークル発表！",

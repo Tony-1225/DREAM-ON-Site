@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 62
+   VERSION   : 69
 ============================================ */
 (async () => {
   let data;
@@ -82,20 +82,23 @@
     }
   }
 
+  const phase = data.phase || '2';
+  // 出演者はフェーズ4・5、出演順と開場・開演時刻はフェーズ5だけ公開する。
+  const announcementPublished = phase === '4' || phase === '5';
+  const performanceOrderPublished = phase === '5';
+
   // HERO
   document.getElementById('hero-catchcopy').textContent = event.catchcopy;
   document.getElementById('hero-vol-badge').textContent = `Vol.${event.vol} — ${event.anniversary}`;
   document.getElementById('hero-info').innerHTML = `
     <div class="event-date">${event.date}</div>
+    ${performanceOrderPublished ? `<div class="event-times"><span>${event.open}</span><span>/ ${event.start}</span></div>` : ''}
     <div class="event-venue">@ ${event.venue}</div>
   `;
 
   /* ============================================================
      PHASE（フェーズ切り替え）
   ============================================================ */
-  const phase = data.phase || '2';
-  // 発表データを用意しても、フェーズ4になるまでは画面に公開しない。
-  const announcementPublished = phase === '4';
   const pt = (data.phase_text && data.phase_text[phase]) || { headline: '', note: '' };
   const phaseEl = document.getElementById('hero-phase');
   const ctaEl = document.getElementById('hero-cta');
@@ -115,8 +118,11 @@
   if (phase === '2' && data.entry_close_date) {
     phaseHTML += `<p class="phase-cd-label">エントリー締切まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
   }
-  if (phase === '4') {
+  if (announcementPublished) {
     phaseHTML += `<a href="#teams" class="btn btn-primary" style="margin:12px auto 4px;display:inline-flex;">出場サークルを見る</a>`;
+    if (performanceOrderPublished) {
+      phaseHTML += `<a href="#timetable" class="btn btn-outline" style="margin:12px auto 4px;display:inline-flex;">出演順を見る</a>`;
+    }
     phaseHTML += `<a href="#judges" class="btn btn-outline" style="margin:12px auto 4px;display:inline-flex;">審査員を見る</a>`;
     if (data.event_datetime) {
       phaseHTML += `<p class="phase-cd-label">本番まで</p><div class="phase-countdown" id="phase-countdown"></div>`;
@@ -133,8 +139,8 @@
     ctaHTML = `
       <a href="${entryFormUrl}" target="_blank" rel="noopener" class="btn btn-primary">エントリーはこちら</a>
       <a href="#about" class="btn btn-outline">詳しく見る</a>`;
-  } else if (phase === '4') {
-    ctaHTML = ``; // フェーズ4はヒーロー内ボタンで完結
+  } else if (announcementPublished) {
+    ctaHTML = ``; // フェーズ4・5はヒーロー内ボタンで完結
   } else {
     ctaHTML = `
       <span class="btn btn-disabled">${phase === '1' ? 'エントリー開始までお待ちください' : 'エントリー受付は終了しました'}</span>
@@ -145,7 +151,7 @@
   // カウントダウン
   const cdTarget = phase === '1' ? data.entry_open_date
                  : phase === '2' ? data.entry_close_date
-                 : phase === '4' ? data.event_datetime
+                 : announcementPublished ? data.event_datetime
                  : null;
   if (cdTarget) {
     const target = new Date(cdTarget).getTime();
@@ -156,7 +162,7 @@
       if (diff <= 0) {
         cdEl.style.display = 'none';
         if (phase === '1') cdEl.innerHTML = `<span class="cd-open">まもなくエントリー開始！</span>`;
-        if (phase === '4') cdEl.innerHTML = `<span class="cd-open">本日開催！</span>`;
+        if (announcementPublished) cdEl.innerHTML = `<span class="cd-open">本日開催！</span>`;
         return;
       }
       const d = Math.floor(diff / 86400000);
@@ -305,8 +311,8 @@
       </div>
     `;
 
-  } else if (phase === '4') {
-    // フェーズ4：ENTRYセクションを非表示
+  } else if (announcementPublished) {
+    // フェーズ4・5：ENTRYセクションを非表示
     const entrySection = document.getElementById('entry');
     if (entrySection) entrySection.style.display = 'none';
     // NAVのENTRYリンクも非表示
@@ -317,17 +323,27 @@
     });
   }
 
-  // TIMETABLE
-  document.getElementById('timetable-header').innerHTML = `
-    <div class="tt-date">${event.date}</div>
-    <div class="tt-venue">${event.venue}</div>
-  `;
+  // 出演順（既存の#timetableリンクは維持）
   const ttList = document.getElementById('timetable-list');
-  if (!timetable || timetable.length === 0) {
+  if (performanceOrderPublished && data.performance_order_poster) {
+    const orderButton = document.createElement('button');
+    orderButton.type = 'button';
+    orderButton.className = 'announcement-poster performance-order-poster reveal';
+    orderButton.setAttribute('aria-label', '出演順の画像を拡大');
+    const orderImage = document.createElement('img');
+    orderImage.src = data.performance_order_poster;
+    orderImage.alt = `DREAM ONE! Vol.${event.vol} 出演順。OPEN 15:00〜、START 16:00〜。1部16:00〜、2部17:15〜。クリックで拡大できます。`;
+    orderImage.loading = 'lazy';
+    orderButton.appendChild(orderImage);
+    orderButton.addEventListener('click', () => openJudgePopup({
+      name: '出演順', image: data.performance_order_poster, profile: ''
+    }));
+    ttList.appendChild(orderButton);
+  } else if (!performanceOrderPublished || !timetable || timetable.length === 0) {
     ttList.innerHTML = `
       <div class="coming-soon-box reveal">
         <div class="coming-soon-text">COMING SOON</div>
-        <div class="coming-soon-sub">タイムテーブルは決まり次第発表いたします</div>
+        <div class="coming-soon-sub">出演順は決まり次第発表いたします</div>
       </div>`;
   } else {
     timetable.forEach(row => {
@@ -471,28 +487,35 @@
     if (e.key === 'Escape' && overlay.classList.contains('open')) closeJudgePopup();
   });
 
-  // フェーズ4：セクション順序並べ替え＋NAVリンク更新
-  if (phase === '4') {
+  // フェーズ4は出演者発表、フェーズ5は出演順を審査員の前へ移動。
+  if (announcementPublished) {
     const main = document.getElementById('main-content');
     if (main) {
-      const order = ['teams', 'judges', 'timetable', 'rules', 'about', 'qa'];
+      const order = performanceOrderPublished
+        ? ['teams', 'timetable', 'judges', 'rules', 'about', 'qa']
+        : ['teams', 'judges', 'timetable', 'rules', 'about', 'qa'];
       order.forEach(id => {
         const el = document.getElementById(id);
         if (el) main.appendChild(el);
       });
     }
-    // NAVリンクをフェーズ4用に更新
+    // NAVもセクションの表示順に合わせる。
     const navList = document.getElementById('nav-list');
     navList.innerHTML = '';
-    const phase4Nav = [
+    const announcementNav = [
       { label: 'TEAMS', href: '#teams' },
-      { label: 'JUDGES', href: '#judges' },
-      { label: 'TIMETABLE', href: '#timetable' },
+      ...(performanceOrderPublished ? [
+        { label: '出演順', href: '#timetable' },
+        { label: 'JUDGES', href: '#judges' },
+      ] : [
+        { label: 'JUDGES', href: '#judges' },
+        { label: '出演順', href: '#timetable' },
+      ]),
       { label: 'ENTRY', href: '#rules' },
       { label: 'ABOUT', href: '#about' },
       { label: 'Q&A', href: '#qa' },
     ];
-    phase4Nav.forEach(item => {
+    announcementNav.forEach(item => {
       const li = document.createElement('li');
       li.innerHTML = `<a href="${item.href}">${item.label}</a>`;
       navList.appendChild(li);
@@ -551,5 +574,5 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ONE! (ドリワン)
-   VERSION   : 62
+   VERSION   : 69
 ============================================ */
