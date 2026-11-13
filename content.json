@@ -2,7 +2,7 @@
   "_meta": {
     "file_type": "JSON",
     "site": "DREAM ON! (ドリオン)",
-    "version": "67"
+    "version": "80"
   },
   "site": {
     "title": "DREAM ON!",
@@ -23,18 +23,19 @@
     "vol": "32",
     "anniversary": "新章スタート",
     "catchcopy": "15年・30回の歴史を超え、新たな舞台へ。",
-    "date": "2027.01.17（Sun）",
-    "venue": "浅草花劇場",
-    "venue_url": "https://www.hanayashiki-kagekijo.com/",
-    "open": "OPEN 16:00",
-    "start": "START 17:00",
+    "date": "2027.1.30 SAT",
+    "venue": "GARDEN 新木場FACTORY",
+    "venue_url": "https://garden-shinkiba-factory.com/",
+    "open": "COMING SOON",
+    "start": "COMING SOON",
+    "open_start": "OPEN / START：COMING SOON",
     "ticket_price": "前売り 3,000円",
     "ticket_note": "1ドリンク別",
-    "message": "15年・30回の歴史を積み重ねてきたDREAM ON!が、新たなステージへ踏み出します。\n\n新会場は浅草花やしき内の「浅草花劇場」。\nキャパシティは小さくなっても、その分だけアーティストと観客の距離はぐっと近くなります。\n\nステージの熱量そのままに、今まで以上に一体感のある空間で、K-POPカバーダンスの祭典をお届けします。",
+    "message": "15年・30回の歴史を積み重ねてきたDREAM ON!が、新たなステージへ踏み出します。\n\n会場はGARDEN 新木場FACTORY。\n開場時間・開演時間は決まり次第お知らせします。\n\nステージの熱量そのままに、今まで以上に一体感のある空間で、K-POPカバーダンスの祭典をお届けします。",
     "youtube_embed": "https://player.vimeo.com/video/1210406119"
   },
   "about": {
-    "lead": "BLACKPINK、ATEEZ、Stray Kids、SEVENTEEN、LE SSERAFIM、NewJeans、RIIZE、ILLIT、BABYMONSTER、KISS OF LIFE などなど、いまだエンターテインメント界で最も熱いK-POPに限定したカバーダンスグループによるフェスティバルです！\n\n2011年にスタートしたDREAM ON!は、15年・30回を経て日本最大級のK-POPカバーダンスフェスへと成長しました。\n\nVol.31からは浅草花劇場を新たな拠点に、これまで培ってきた熱量はそのままに、出演者と観客がより近い距離で楽しめる濃密なステージをお届けします。\n\n出場者には、プロの照明・音響スタッフによる本格的なステージで思い切りパフォーマンスしていただき、その模様は映像収録もされます！",
+    "lead": "BLACKPINK、ATEEZ、Stray Kids、SEVENTEEN、LE SSERAFIM、NewJeans、RIIZE、ILLIT、BABYMONSTER、KISS OF LIFE などなど、いまだエンターテインメント界で最も熱いK-POPに限定したカバーダンスグループによるフェスティバルです！\n\n2011年にスタートしたDREAM ON!は、15年・30回を経て日本最大級のK-POPカバーダンスフェスへと成長しました。\n\nこれまで培ってきた熱量はそのままに、出演者と観客がより近い距離で楽しめる濃密なステージをお届けします。\n\n出場者には、プロの照明・音響スタッフによる本格的なステージで思い切りパフォーマンスしていただき、その模様は映像収録もされます！",
     "body": "",
     "features": [
       {
@@ -45,7 +46,7 @@
       {
         "icon": "🎯",
         "title": "アーティストとの距離が近い",
-        "desc": "浅草花劇場だからこそ生まれる、圧倒的な臨場感と一体感"
+        "desc": "出演者と観客が近い距離で楽しめる、圧倒的な臨場感と一体感"
       },
       {
         "icon": "📹",
@@ -253,8 +254,8 @@
     "images/hero6.jpeg",
     "images/hero7.jpeg"
   ],
-  "phase": "0",
-  "entry_open_date": "2026-12-01T18:00:00",
+  "phase": "2",
+  "entry_open_date": "2026-11-13T19:00:00+09:00",
   "phase_text": {
     "0": {
       "headline": "COMING SOON",
@@ -264,13 +265,13 @@
     },
     "1": {
       "headline": "エントリー開始まで",
-      "note": "開始までしばらくお待ちください。\n開始日時はSNSでお知らせします。",
+      "note": "2026年11月13日（金）19:00より\nエントリー受付開始",
       "entry_headline": "エントリー受付開始まで、今しばらくお待ちください。",
-      "entry_note": "開始日時はSNS（X / Instagram）にてお知らせします。\nお問い合わせもSNSよりDMにてご連絡ください。"
+      "entry_note": "2026年11月13日（金）19:00より\nエントリー受付開始\nお問い合わせはSNSよりDMにてご連絡ください。"
     },
     "2": {
       "headline": "エントリー受付中！",
-      "note": "下記フォームよりお申し込みください。",
+      "note": "受付期間：11月13日（金）〜12月14日（月）\n下記フォームよりお申し込みください。",
       "entry_headline": "あなたもDREAM ON!のステージに立ちませんか？",
       "entry_note": "全国から仲間と一緒にエントリー受付中！"
     },
@@ -288,6 +289,6 @@
     }
   },
   "event_datetime": "2026-08-23T16:30:00",
-  "entry_close_date": "2026-07-06T23:59:00",
-  "entry_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSeUFGKw_Gy9o7lQ40VwbRT5PFkT3d37_s31ftSO8zquj5fYqA/viewform?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAZXh0bgNhZW0CMTEAc3J0YwZhcHBfaWQPMTI0MDI0NTc0Mjg3NDE0AAGnySJpA222LiwUwCGhCaA53Bu7Mon_EyVNYnbqQlWCHHyOEo6Ef6bNj8grYFE_aem_9Z6Axj77wXOQicxhp4tOYQ"
+  "entry_close_date": "",
+  "entry_form_url": "https://docs.google.com/forms/d/e/1FAIpQLSdAqCfbfeMiSDo3_XKWbhsxuQIuXGKECkgJQU5mYCERhn52Nw/viewform"
 }

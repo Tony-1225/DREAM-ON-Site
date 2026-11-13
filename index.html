@@ -1,7 +1,7 @@
 <!-- ============================================
      FILE TYPE : HTML
      SITE      : DREAM ON! (ドリオン)
-     VERSION   : 67
+     VERSION   : 80
 ============================================ -->
 <!DOCTYPE html>
 <html lang="ja">
@@ -16,9 +16,18 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Noto+Sans+JP:wght@400;700;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
-  <link rel="stylesheet" href="style.css?v=67" />
+  <link rel="stylesheet" href="style.css?v=77" />
 </head>
 <body>
+  <!-- Smooth transparency at the silhouette only; never blur logo colors/text. -->
+  <svg width="0" height="0" aria-hidden="true" focusable="false" style="position:absolute;pointer-events:none">
+    <defs>
+      <filter id="logo-edge-soften" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">
+        <feGaussianBlur in="SourceAlpha" stdDeviation="0.6" result="softEdge" />
+        <feComposite in="SourceGraphic" in2="softEdge" operator="in" />
+      </filter>
+    </defs>
+  </svg>
 
   <header class="site-header" id="site-header">
     <div class="header-inner">
@@ -48,7 +57,6 @@
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';" />
         <h1 class="hero-title" style="display:none">DREAM ON!</h1>
       </div>
-      <p class="hero-sub">K-POP COVER DANCE FES</p>
       <div class="hero-info" id="hero-info"></div>
       <div class="hero-phase" id="hero-phase"></div>
       <div class="hero-cta" id="hero-cta"></div>
@@ -124,10 +132,12 @@
   <footer class="site-footer">
     <div class="footer-inner">
       <div class="footer-logo">
+        <span class="footer-logo-frame">
         <img src="images/logo.png"
              onerror="this.style.display='none';this.nextElementSibling.style.display='block';"
              alt="DREAM ON!" />
         <span class="logo-text" style="display:none">DREAM ON!</span>
+        </span>
       </div>
       <div class="footer-social" id="footer-social"></div>
       <p class="footer-copy">© DREAM ON! All Rights Reserved.</p>
@@ -135,11 +145,11 @@
     </div>
   </footer>
 
-  <script src="main.js?v=63"></script>
+  <script src="main.js?v=77"></script>
 </body>
 </html>
 <!-- ============================================
      FILE TYPE : HTML
      SITE      : DREAM ON! (ドリオン)
-     VERSION   : 67
+     VERSION   : 80
 ============================================ -->

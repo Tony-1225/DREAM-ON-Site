@@ -1,7 +1,7 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ON! (ドリオン)
-   VERSION   : 60
+   VERSION   : 77
 ============================================ */
 /* =============================================
    DREAM ON! – main.js
@@ -130,9 +130,10 @@
   const pt = (data.phase_text && data.phase_text[phase]) || { headline: '', note: '' };
 
   // フェーズ0（公開前・次回未定）では開催日・会場は非表示
+  const eventTimes = event.open_start || `${event.open} / ${event.start}`;
   document.getElementById('hero-info').innerHTML = (phase === '0') ? '' : `
     <div class="event-date">${event.date}</div>
-    <div class="event-venue">@ ${event.venue} / ${event.open} / ${event.start}</div>
+    <div class="event-venue"><span class="event-info-item">会場：${event.venue}</span><span class="event-info-item">${eventTimes}</span></div>
   `;
   const phaseEl = document.getElementById('hero-phase');
   const ctaEl = document.getElementById('hero-cta');
@@ -146,10 +147,6 @@
     phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
   }
   if (phase === '1') {
-    // 開催日テキスト表示
-    if (event.date) {
-      phaseHTML += `<p class="phase-event-date">開催日：${event.date}</p>`;
-    }
     // 見出し（カウントダウンの上に配置）
     phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
     // エントリーまでDaysカウントダウン
@@ -171,7 +168,7 @@
     phaseHTML += `<div class="phase-headline phase-${phase}">${pt.headline}</div>`;
   }
 
-  phaseHTML += `<div class="phase-note">${pt.note}</div>`;
+  phaseHTML += `<div class="phase-note${phase === '1' ? ' phase-note--entry-opening' : ''}">${pt.note}</div>`;
   phaseEl.innerHTML = phaseHTML;
 
   // ボタンの出し分け
@@ -240,7 +237,7 @@
   ============================================================ */
   document.getElementById('timetable-header').innerHTML = `
     <div class="tt-date">${event.date}</div>
-    <div class="tt-venue">${event.venue} / ${event.open} – ${event.start}</div>
+    <div class="tt-venue"><span class="event-info-item">会場：${event.venue}</span><span class="event-info-item">${eventTimes}</span></div>
   `;
 
   const ttList = document.getElementById('timetable-list');
@@ -267,7 +264,9 @@
      TEAMS（通常ブロック／U-18ブロック）
   ============================================================ */
   const teamsGrid = document.getElementById('teams-grid');
-  teams.forEach(name => {
+  // 出演者発表（phase 4）より前は、保存済みの旧チーム名も描画しない。
+  const publishedTeams = phase === '4' ? (teams || []) : [];
+  publishedTeams.forEach(name => {
     const card = document.createElement('div');
     card.className = 'team-card reveal';
     card.innerHTML = `<span>${name}</span>`;
@@ -275,13 +274,22 @@
   });
 
   const teamsU18Grid = document.getElementById('teams-u18-grid');
-  const teamsU18 = data.teams_u18 || [];
+  const teamsU18 = phase === '4' ? (data.teams_u18 || []) : [];
   teamsU18.forEach(name => {
     const card = document.createElement('div');
     card.className = 'team-card reveal';
     card.innerHTML = `<span>${name}</span>`;
     teamsU18Grid.appendChild(card);
   });
+
+  if (phase !== '4') {
+    document.getElementById('teams').style.display = 'none';
+    document.querySelectorAll('#nav-list a').forEach(a => {
+      if (a.getAttribute('href') === '#teams') {
+        a.parentElement.style.display = 'none';
+      }
+    });
+  }
 
   /* ============================================================
      ENTRY（フェーズ対応）
@@ -518,5 +526,5 @@
 /* ============================================
    FILE TYPE : JS
    SITE      : DREAM ON! (ドリオン)
-   VERSION   : 60
+   VERSION   : 77
 ============================================ */
